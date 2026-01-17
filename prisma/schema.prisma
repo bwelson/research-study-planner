@@ -1,0 +1,23 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String   @id @default(cuid())
+  email              String   @unique
+  password           String?
+  createdAt          DateTime @default(now())
+  subscriptionStatus String   @default("free")
+  searchesUsed       Int      @default(0)
+  searchesLimit      Int      @default(5)
+  
+  // Paystack subscription fields
+  paystackCustomerCode String?
+  paystackSubscriptionCode String?
+  subscriptionExpiresAt DateTime?
+}
