@@ -71,9 +71,9 @@ export default function AuthPage({ onSuccess }: AuthPageProps = {}) {
     }
   };
 
-  const handleOAuthLogin = (provider: string) => {
-    // Placeholder for OAuth - you'll implement this later
-    alert(`${provider} login coming soon! Set up OAuth credentials first.`);
+  const handleOAuthLogin = async (provider: string) => {
+    const { signIn } = await import('next-auth/react');
+    signIn(provider.toLowerCase(), { callbackUrl: '/dashboard' });
   };
 
   const continueToApp = () => {
@@ -297,6 +297,25 @@ export default function AuthPage({ onSuccess }: AuthPageProps = {}) {
                 onBlur={(e) => e.currentTarget.style.borderColor = '#e5e7eb'}
               />
             </div>
+            
+            {isLogin && (
+              <div style={{ textAlign: 'right', marginBottom: 16 }}>
+                <button
+                  type="button"
+                  onClick={() => window.location.href = '/forgot-password'}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#667eea',
+                    fontSize: 13,
+                    cursor: 'pointer',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
 
             {!isLogin && (
               <div style={{ marginBottom: 16 }}>

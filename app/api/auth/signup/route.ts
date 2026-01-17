@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
+import { sendWelcomeEmail } from '@/lib/email';
 
 export async function POST(request: Request) {
   try {
@@ -26,7 +27,8 @@ export async function POST(request: Request) {
         password: hashedPassword,
       },
     });
-    
+    await sendWelcomeEmail(email);
+
     const token = jwt.sign(
       { userId: user.id }, 
       process.env.JWT_SECRET || 'your-secret-key', 
