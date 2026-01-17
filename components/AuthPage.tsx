@@ -2,7 +2,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function AuthPage() {
+interface AuthPageProps {
+  onSuccess?: () => void;
+}
+
+export default function AuthPage({ onSuccess }: AuthPageProps = {}) {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -54,6 +58,7 @@ export default function AuthPage() {
           setShowWelcomeModal(true);
         } else {
           // Go directly to dashboard on login
+          onSuccess?.();
           router.push('/dashboard');
         }
       } else {
@@ -72,6 +77,7 @@ export default function AuthPage() {
   };
 
   const continueToApp = () => {
+    onSuccess?.();
     router.push('/dashboard');
   };
 

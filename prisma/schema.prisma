@@ -11,10 +11,16 @@ model User {
   id                 String   @id @default(cuid())
   email              String   @unique
   password           String?
-  createdAt          DateTime @default(now())
-  subscriptionStatus String   @default("free")
-  searchesUsed       Int      @default(0)
-  searchesLimit      Int      @default(5)
+  isPremium         Boolean  @default(false)
+  isAcademicTester  Boolean  @default(false)
+  searchCount       Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+  
+  // Old fields (keep for now)
+  searchesLimit     Int?
+  searchesUsed      Int?
+  subscriptionStatus String?
   
   // Paystack subscription fields
   paystackCustomerCode String?
