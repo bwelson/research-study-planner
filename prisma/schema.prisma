@@ -12,18 +12,33 @@ model User {
   email              String   @unique
   password           String?
   isPremium         Boolean  @default(false)
+  isAdmin           Boolean  @default(false)
   isAcademicTester  Boolean  @default(false)
   searchCount       Int      @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now()) @updatedAt
   
-  // Old fields (keep for now)
   searchesLimit     Int?
   searchesUsed      Int?
   subscriptionStatus String?
   
-  // Paystack subscription fields
   paystackCustomerCode String?
   paystackSubscriptionCode String?
   subscriptionExpiresAt DateTime?
+}
+
+model AcademicCode {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  isUsed      Boolean  @default(false)
+  usedBy      String?
+  createdAt   DateTime @default(now())
+  usedAt      DateTime?
+}
+
+model SystemSettings {
+  id                String   @id @default(cuid())
+  freeAccessEnabled Boolean  @default(false)
+  freeAccessUntil   DateTime?
+  updatedAt         DateTime @updatedAt
 }
