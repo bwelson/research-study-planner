@@ -22,7 +22,22 @@ export async function sendWelcomeEmail(email: string) {
   }
 }
 
-  export async function sendPasswordResetEmail(email: string, resetToken: string) {
+export async function sendSubscriptionEmail(email: string, isPremium: boolean) {
+  try {
+    await resend.emails.send({
+      from: process.env.FROM_EMAIL!,
+      to: email,
+      subject: isPremium ? 'Welcome to Premium!' : 'Subscription Cancelled',
+      html: isPremium 
+        ? `<h1>Welcome to Premium!</h1><p>You now have unlimited searches.</p>`
+        : `<h1>Subscription Cancelled</h1><p>Your premium access has ended.</p>`
+    });
+  } catch (error) {
+    console.error('Email error:', error);
+  }
+}
+
+export async function sendPasswordResetEmail(email: string, resetToken: string) {
   try {
     const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${resetToken}`;
     
@@ -43,5 +58,4 @@ export async function sendWelcomeEmail(email: string) {
   } catch (error) {
     console.error('Password reset email error:', error);
   }
-}
 }
