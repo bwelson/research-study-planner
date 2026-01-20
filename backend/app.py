@@ -9,13 +9,27 @@ from fastapi.middleware.cors import CORSMiddleware
 from analysis import embed_papers  # your existing function
 from datetime import date, timedelta
 from fastapi import Body
+from dotenv import load_dotenv 
+import os
+from dotenv import load_dotenv
 
-API_KEY = "9hIgGY5M223rHWUXBXuJzvCI33cwFEr9igOAaS32"  # keep it simple for now
+load_dotenv()  # Add this
+API_KEY = os.getenv("SEMANTIC_SCHOLAR_API_KEY", "")
+
+# DEBUG - Remove this after fixing
+print(f"🔑 API Key loaded: {'YES ✓' if API_KEY else 'NO ✗ (EMPTY!)'}")
+if API_KEY:
+    print(f"   First 10 chars: {API_KEY[:10]}...")
+API_KEY = os.getenv("SEMANTIC_SCHOLAR_API_KEY", "")
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://127.0.0.1:3000",
+        "https://research-nest-plum.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
