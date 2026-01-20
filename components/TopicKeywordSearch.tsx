@@ -89,7 +89,7 @@ export default function TopicKeywordSearch({ canSearch, onSearchLimitReached, is
         await fetch('/api/increment-search', { method: 'POST' });
       }
       
-      const res = await fetch("http://127.0.0.1:8000/papers/search", {
+      const res = await fetch("https://research-nest-backend.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
