@@ -29,7 +29,8 @@ app.add_middleware(
         "http://localhost:3000", 
         "http://127.0.0.1:3000",
         "https://research-nest-plum.vercel.app",
-        "https://research-nest-backend.onrender.com"  # Add this
+        "https://*.vercel.app",  # All Vercel preview deployments
+        "*"  # Temporarily allow all origins for testing (remove this in production)
     ],
     allow_credentials=True,
     allow_methods=["*"],
