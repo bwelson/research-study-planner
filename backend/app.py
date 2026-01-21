@@ -28,7 +28,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", 
         "http://127.0.0.1:3000",
-        "https://research-nest-plum.vercel.app"
+        "https://research-nest-plum.vercel.app",
+        "https://research-nest-backend.onrender.com"  # Add this
     ],
     allow_credentials=True,
     allow_methods=["*"],
